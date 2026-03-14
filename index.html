@@ -12,147 +12,177 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #ffe6e6; /* হালকা গোলাপি ব্যাকগ্রাউন্ড */
+            /* ম্যাজিকাল ব্যাকগ্রাউন্ড */
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #ffc3a0, #ffafbd);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             overflow: hidden;
             flex-direction: column;
             position: relative;
         }
-        
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* মেইন টাইটেল */
         h1 {
-            font-size: 4rem;
-            color: #ff3333;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            font-size: 4.5rem;
+            color: #ffffff;
+            text-shadow: 3px 3px 10px rgba(255, 50, 50, 0.6);
             z-index: 20;
-            animation: heartbeat 1.5s infinite;
+            /* ভাসমান অ্যানিমেশন */
+            animation: floatUpDn 3s ease-in-out infinite;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
+        @keyframes floatUpDn {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* নিচের রোমান্টিক মেসেজ */
         .love-text {
-            font-size: 2rem;
-            color: #e84393;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            font-size: 2.2rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(200, 0, 50, 0.6);
             z-index: 20;
             text-align: center;
-            margin-top: 0;
-            font-weight: bold;
-            opacity: 0; /* শুরুতে অদৃশ্য থাকবে */
-            animation: slowFadeIn 3s ease-in forwards, glow 2s ease-in-out infinite alternate;
-            animation-delay: 1s, 4s; /* ১ সেকেন্ড পর ফেড-ইন শুরু, ৪ সেকেন্ড পর গ্লো শুরু */
+            opacity: 0;
+            /* নিচ থেকে স্লাইড করে ওঠার অ্যানিমেশন */
+            transform: translateY(30px);
+            animation: slideUpFade 2s ease-out forwards;
+            animation-delay: 1.5s;
         }
 
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.1); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.1); }
-            60% { transform: scale(1); }
-            100% { transform: scale(1); }
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 5px #ff7675, 0 0 10px #ff7675; }
-            to { text-shadow: 0 0 20px #d63031, 0 0 30px #d63031; }
-        }
-
-        @keyframes slowFadeIn {
-            to { opacity: 1; }
-        }
-
-        .heart {
+        /* চারদিকে ছড়িয়ে পড়া হার্ট */
+        .particle {
             position: absolute;
-            bottom: -50px;
-            color: red;
-            animation: floatUp linear forwards;
+            pointer-events: none;
             z-index: 10;
         }
 
-        @keyframes floatUp {
-            to {
-                transform: translateY(-120vh) rotate(360deg);
-                opacity: 0;
-            }
+        /* নতুন: র্যান্ডম "sorry" লেখার স্টাইল */
+        .sorry-popup {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(255, 50, 50, 0.5);
+            pointer-events: none;
+            z-index: 15;
+            animation: popUpFade 3s ease-in-out forwards;
         }
 
-        /* ব্লাস্ট হার্টের জন্য ট্র্যাজেক্টরি */
-        @keyframes blastUpLeft { 
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(-30vw, -70vh) rotate(-180deg) scale(0); opacity: 0; }
+        @keyframes popUpFade {
+            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+            20% { opacity: 1; transform: scale(1.1) translateY(0); }
+            80% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.8) translateY(-20px); }
         }
-        @keyframes blastUpRight { 
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(30vw, -70vh) rotate(180deg) scale(0); opacity: 0; }
-        }
-        @keyframes blastLeft { 
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(-50vw, -10vh) rotate(-90deg) scale(0); opacity: 0; }
-        }
-        @keyframes blastRight { 
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(50vw, -10vh) rotate(90deg) scale(0); opacity: 0; }
-        }
-        @keyframes blastDownLeft { 
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(-30vw, 30vh) rotate(-270deg) scale(0); opacity: 0; }
-        }
-        @keyframes blastDownRight { 
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(30vw, 30vh) rotate(270deg) scale(0); opacity: 0; }
-        }
-
     </style>
 </head>
 <body>
 
     <h1>Sorry Gubbu 🥺❤️</h1>
-    
     <p class="love-text">i love you bou forever,and ever,and ever 💕</p>
 
     <script>
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 2 + 1;
-            heart.style.fontSize = size + 'rem';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 5000);
-        }
-
-        function loveBlast() {
-            const blastCenter = document.querySelector('.love-text');
-            const blastRect = blastCenter.getBoundingClientRect();
-            const centerX = blastRect.left + blastRect.width / 2;
-            const centerY = blastRect.top + blastRect.height; // ব্লাস্ট লেখার নিচ থেকে হবে
-
-            const trajectories = ['blastUpLeft', 'blastUpRight', 'blastLeft', 'blastRight', 'blastDownLeft', 'blastDownRight'];
-
-            for (let i = 0; i < 60; i++) { // ৬০টি হার্ট একসাথে
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = (i % 3 === 0) ? '💖' : (i % 3 === 1) ? '💕' : '❤️'; // বিভিন্ন হার্ট
-                heart.style.left = centerX + 'px';
-                heart.style.top = centerY + 'px';
-                const size = Math.random() * 2 + 1.5;
-                heart.style.fontSize = size + 'rem';
-                
-                // র্যান্ডম ট্র্যাজেক্টরি নির্বাচন
-                const trajectory = trajectories[Math.floor(Math.random() * trajectories.length)];
-                heart.style.animation = `${trajectory} ${Math.random() * 2 + 1.5}s ease-out forwards`;
-                
+        // ১. ফায়ারওয়ার্কস ব্লাস্ট অ্যানিমেশন
+        function explodeHearts() {
+            for (let i = 0; i < 80; i++) {
+                let heart = document.createElement('div');
+                heart.innerHTML = ['❤️', '💖', '💕', '💗'][Math.floor(Math.random() * 4)];
+                heart.className = 'particle';
                 document.body.appendChild(heart);
-                setTimeout(() => { heart.remove(); }, 4000);
+                
+                let angle = Math.random() * Math.PI * 2; 
+                let velocity = 10 + Math.random() * 20; 
+                let x = window.innerWidth / 2;
+                let y = window.innerHeight / 2;
+                let size = Math.random() * 2 + 1;
+                
+                heart.style.fontSize = size + 'rem';
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+                heart.style.transition = 'all 2.5s cubic-bezier(0.25, 1, 0.5, 1)';
+                
+                setTimeout(() => {
+                    heart.style.transform = `translate(${Math.cos(angle) * velocity * 20}px, ${Math.sin(angle) * velocity * 20}px) scale(0) rotate(${Math.random() * 360}deg)`;
+                    heart.style.opacity = '0';
+                }, 50);
+                
+                setTimeout(() => heart.remove(), 2600);
             }
         }
 
-        // শুরুতে ব্লাস্ট হবে (১.৫ সেকেন্ড পর)
-        setTimeout(loveBlast, 1500);
+        // ২. দুলতে দুলতে উপরে ওঠার অ্যানিমেশন (Swaying Hearts)
+        function floatHearts() {
+            let heart = document.createElement('div');
+            heart.innerHTML = ['❤️', '💖', '💕'][Math.floor(Math.random() * 3)];
+            heart.style.position = 'absolute';
+            heart.style.bottom = '-10%';
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            let size = Math.random() * 1.5 + 1;
+            heart.style.fontSize = size + 'rem';
+            heart.style.opacity = Math.random() * 0.5 + 0.5;
+            heart.style.zIndex = '5';
+            
+            let duration = Math.random() * 3 + 4;
+            
+            heart.style.animation = `sway ${duration}s ease-in-out infinite alternate, moveUp ${duration + 2}s linear forwards`;
+            
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), (duration + 2) * 1000);
+        }
 
-        // এরপর কন্টিনিউয়াসলি হার্ট উড়তে থাকবে
-        setInterval(createHeart, 150);
+        // ৩. র্যান্ডম জায়গায় "sorry" ভেসে ওঠার ফাংশন
+        function popUpSorry() {
+            let sorryText = document.createElement('div');
+            sorryText.innerHTML = 'sorry 🥺'; // আপনি চাইলে শুধু 'sorry' রাখতে পারেন
+            sorryText.className = 'sorry-popup';
+            
+            // স্ক্রিনের র্যান্ডম পজিশন
+            sorryText.style.left = Math.random() * 90 + 'vw';
+            sorryText.style.top = Math.random() * 90 + 'vh';
+            
+            // র্যান্ডম সাইজ
+            let size = Math.random() * 1.5 + 1.2;
+            sorryText.style.fontSize = size + 'rem';
+            
+            document.body.appendChild(sorryText);
+            
+            // অ্যানিমেশন শেষ হলে মুছে ফেলা হবে (৩ সেকেন্ড পর)
+            setTimeout(() => sorryText.remove(), 3000);
+        }
+
+        // ডায়নামিক CSS (দুলতে দুলতে ওঠার জন্য)
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes moveUp { to { bottom: 110%; } }
+            @keyframes sway { 
+                0% { transform: translateX(-30px) rotate(-15deg); } 
+                100% { transform: translateX(30px) rotate(15deg); } 
+            }
+        `;
+        document.head.appendChild(style);
+
+        // পেজ লোড হওয়ার একটু পর ব্লাস্ট হবে
+        setTimeout(explodeHearts, 500);
+
+        // কন্টিনিউয়াসলি হার্ট দুলতে দুলতে উপরে উঠবে
+        setInterval(floatHearts, 300);
+
+        // কন্টিনিউয়াসলি র্যান্ডম জায়গায় "sorry" ভেসে উঠবে (প্রতি ৮০০ মিলিসেকেন্ড পর পর)
+        setInterval(popUpSorry, 800);
     </script>
 
 </body>
