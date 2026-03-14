@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorry Gubbu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffe6e6; /* হালকা গোলাপি ব্যাকগ্রাউন্ড */
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            color: #ff3333;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+            animation: heartbeat 1.5s infinite;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .love-text {
+            font-size: 2rem;
+            color: #e84393;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            z-index: 10;
+            text-align: center;
+            margin-top: 0;
+            font-weight: bold;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+            60% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #ff7675, 0 0 10px #ff7675; }
+            to { text-shadow: 0 0 20px #d63031, 0 0 30px #d63031; }
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            color: red;
+            animation: floatUp linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sorry Gubbu 🥺❤️<br><span style="font-size: 1.5rem; color: #555;">Please forgive me!</span></h1>
+    
+    <p class="love-text">i love you bou forever,and ever,and ever 💕</p>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            
+            // হার্টগুলো স্ক্রিনের যেকোনো জায়গা থেকে উঠবে
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // হার্টের সাইজ ছোট-বড় হবে
+            const size = Math.random() * 2 + 1;
+            heart.style.fontSize = size + 'rem';
+            
+            // ওড়ার স্পিড
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            
+            document.body.appendChild(heart);
+            
+            // ৫ সেকেন্ড পর হার্টগুলো ডিলিট হয়ে যাবে যাতে ব্রাউজার স্লো না হয়
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // শুরুতে একসাথে অনেকগুলো হার্ট ব্লাস্ট হবে
+        for(let i = 0; i < 50; i++) {
+            setTimeout(createHeart, Math.random() * 1500);
+        }
+
+        // এরপর কন্টিনিউয়াসলি হার্ট উড়তে থাকবে
+        setInterval(createHeart, 150);
+    </script>
+
+</body>
+</html>
