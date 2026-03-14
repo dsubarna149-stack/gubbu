@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sorry Gubbu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -16,7 +17,6 @@
             background: linear-gradient(-45deg, #ff9a9e, #fecfef, #ffc3a0, #ffafbd);
             background-size: 400% 400%;
             animation: gradientBG 10s ease infinite;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
             overflow: hidden;
             flex-direction: column;
             position: relative;
@@ -30,11 +30,11 @@
 
         /* মেইন টাইটেল */
         h1 {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             font-size: 4.5rem;
             color: #ffffff;
             text-shadow: 3px 3px 10px rgba(255, 50, 50, 0.6);
             z-index: 20;
-            /* ভাসমান অ্যানিমেশন */
             animation: floatUpDn 3s ease-in-out infinite;
             text-align: center;
             margin-bottom: 10px;
@@ -45,9 +45,11 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* নিচের রোমান্টিক মেসেজ */
+        /* প্রফেশনাল Serif ফন্ট */
         .love-text {
+            font-family: 'Playfair Display', serif;
             font-size: 2.2rem;
+            font-weight: 700;
             color: #ffffff;
             text-shadow: 2px 2px 8px rgba(200, 0, 50, 0.6);
             z-index: 20;
@@ -57,6 +59,21 @@
             transform: translateY(30px);
             animation: slideUpFade 2s ease-out forwards;
             animation-delay: 1.5s;
+            margin-bottom: 5px;
+        }
+
+        /* হ্যান্ডরিটেন Cursive ফন্ট "S+S" */
+        .initials-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 5px rgba(200, 0, 50, 0.4);
+            z-index: 20;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFade 1.5s ease-out forwards;
+            animation-delay: 2.5s;
         }
 
         @keyframes slideUpFade {
@@ -70,22 +87,46 @@
             z-index: 10;
         }
 
-        /* নতুন: র্যান্ডম "sorry" লেখার স্টাইল */
-        .sorry-popup {
+        /* বড় গোলাপের ডিজাইন এবং অ্যানিমেশন */
+        .rose-container {
             position: absolute;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: bold;
-            text-shadow: 2px 2px 8px rgba(255, 50, 50, 0.5);
+            bottom: -300px; /* শুরুতে নিচ থেকে শুরু */
+            z-index: 18; /* মেইন টেক্সটের নিচে কিন্তু ব্যাকগ্রাউন্ডের উপরে */
+            animation: moveUpStop 2s ease-out forwards;
+            animation-delay: 0.8s; /* ব্লাস্টের পর আসবে */
             pointer-events: none;
-            z-index: 15;
-            animation: popUpFade 3s ease-in-out forwards;
         }
 
-        @keyframes popUpFade {
-            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
-            20% { opacity: 1; transform: scale(1.1) translateY(0); }
-            80% { opacity: 1; transform: scale(1) translateY(0); }
-            100% { opacity: 0; transform: scale(0.8) translateY(-20px); }
+        @keyframes moveUpStop {
+            0% { bottom: -300px; }
+            100% { bottom: 50%; transform: translateY(50%); } /* মাঝখানে থামবে */
+        }
+
+        .rose-icon {
+            font-size: 15rem; /* বড় গোলাপ */
+            /* hue-rotate ব্যবহার করে লাল গোলাপকে নীল করা হয়েছে */
+            filter: drop-shadow(0 0 15px rgba(0,0,255,0.4)) hue-rotate(240deg);
+            transition: transform 0.3s ease;
+        }
+
+        /* গোলাপ থেকে ছড়িয়ে পড়া "sorry" লেখার স্টাইল */
+        .sorry-popup {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 255, 0.5); /* শ্যাডোটাও নীলচে করা হয়েছে */
+            pointer-events: none;
+            z-index: 25;
+            animation: popUpFadeDisperse 3.5s ease-in-out forwards;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        @keyframes popUpFadeDisperse {
+            0% { opacity: 0; transform: scale(0.1) translate(0, 0) rotate(0deg); }
+            10% { opacity: 1; transform: scale(1.1) translate(0, -10px) rotate(0deg); }
+            30% { opacity: 1; transform: scale(1) translate(var(--x-disperse), var(--y-disperse)) rotate(var(--rotate-disperse)); }
+            80% { opacity: 0.8; }
+            100% { opacity: 0; transform: scale(0.8) translate(var(--x-disperse), calc(var(--y-disperse) - 100px)) rotate(calc(var(--rotate-disperse) + 20deg)); }
         }
     </style>
 </head>
@@ -93,6 +134,11 @@
 
     <h1>Sorry Gubbu 🥺❤️</h1>
     <p class="love-text">i love you bou forever,and ever,and ever 💕</p>
+    <p class="initials-text">S+S</p> 
+
+    <div class="rose-container">
+        <div class="rose-icon">🌹</div> 
+    </div>
 
     <script>
         // ১. ফায়ারওয়ার্কস ব্লাস্ট অ্যানিমেশন
@@ -123,7 +169,7 @@
             }
         }
 
-        // ২. দুলতে দুলতে উপরে ওঠার অ্যানিমেশন (Swaying Hearts)
+        // ২. দুলতে দুলতে উপরে ওঠার অ্যানিমেশন
         function floatHearts() {
             let heart = document.createElement('div');
             heart.innerHTML = ['❤️', '💖', '💕'][Math.floor(Math.random() * 3)];
@@ -144,27 +190,31 @@
             setTimeout(() => heart.remove(), (duration + 2) * 1000);
         }
 
-        // ৩. র্যান্ডম জায়গায় "sorry" ভেসে ওঠার ফাংশন
+        // ৩. গোলাপ থেকে "sorry" ভেসে ওঠার ফাংশন
         function popUpSorry() {
             let sorryText = document.createElement('div');
-            sorryText.innerHTML = 'sorry 🥺'; // আপনি চাইলে শুধু 'sorry' রাখতে পারেন
+            sorryText.innerHTML = 'sorry 🥺'; 
             sorryText.className = 'sorry-popup';
             
-            // স্ক্রিনের র্যান্ডম পজিশন
-            sorryText.style.left = Math.random() * 90 + 'vw';
-            sorryText.style.top = Math.random() * 90 + 'vh';
+            let centerX = window.innerWidth / 2;
+            let centerY = window.innerHeight / 2;
+
+            sorryText.style.setProperty('--x-disperse', `${(Math.random() - 0.5) * 80 + 'vw'}`);
+            sorryText.style.setProperty('--y-disperse', `${(Math.random() - 0.8) * 80 + 'vh'}`);
+            sorryText.style.setProperty('--rotate-disperse', `${(Math.random() - 0.5) * 90 + 'deg'}`);
+
+            sorryText.style.left = centerX + 'px';
+            sorryText.style.top = centerY + 'px';
             
-            // র্যান্ডম সাইজ
             let size = Math.random() * 1.5 + 1.2;
             sorryText.style.fontSize = size + 'rem';
             
             document.body.appendChild(sorryText);
             
-            // অ্যানিমেশন শেষ হলে মুছে ফেলা হবে (৩ সেকেন্ড পর)
-            setTimeout(() => sorryText.remove(), 3000);
+            setTimeout(() => sorryText.remove(), 3500);
         }
 
-        // ডায়নামিক CSS (দুলতে দুলতে ওঠার জন্য)
+        // ডায়নামিক CSS 
         const style = document.createElement('style');
         style.innerHTML = `
             @keyframes moveUp { to { bottom: 110%; } }
@@ -175,14 +225,13 @@
         `;
         document.head.appendChild(style);
 
-        // পেজ লোড হওয়ার একটু পর ব্লাস্ট হবে
         setTimeout(explodeHearts, 500);
-
-        // কন্টিনিউয়াসলি হার্ট দুলতে দুলতে উপরে উঠবে
         setInterval(floatHearts, 300);
 
-        // কন্টিনিউয়াসলি র্যান্ডম জায়গায় "sorry" ভেসে উঠবে (প্রতি ৮০০ মিলিসেকেন্ড পর পর)
-        setInterval(popUpSorry, 800);
+        // গোলাপ উঠে আসার পর থেকে sorry ছড়াবে
+        setTimeout(() => {
+            setInterval(popUpSorry, 800);
+        }, 3000); 
     </script>
 
 </body>
