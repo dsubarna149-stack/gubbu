@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,27 +16,30 @@
             font-family: 'Comic Sans MS', cursive, sans-serif;
             overflow: hidden;
             flex-direction: column;
+            position: relative;
         }
         
         h1 {
             font-size: 4rem;
             color: #ff3333;
             text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            z-index: 10;
+            z-index: 20;
             animation: heartbeat 1.5s infinite;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .love-text {
             font-size: 2rem;
             color: #e84393;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-            z-index: 10;
+            z-index: 20;
             text-align: center;
             margin-top: 0;
             font-weight: bold;
-            animation: glow 2s ease-in-out infinite alternate;
+            opacity: 0; /* শুরুতে অদৃশ্য থাকবে */
+            animation: slowFadeIn 3s ease-in forwards, glow 2s ease-in-out infinite alternate;
+            animation-delay: 1s, 4s; /* ১ সেকেন্ড পর ফেড-ইন শুরু, ৪ সেকেন্ড পর গ্লো শুরু */
         }
 
         @keyframes heartbeat {
@@ -53,12 +56,16 @@
             to { text-shadow: 0 0 20px #d63031, 0 0 30px #d63031; }
         }
 
+        @keyframes slowFadeIn {
+            to { opacity: 1; }
+        }
+
         .heart {
             position: absolute;
             bottom: -50px;
             color: red;
             animation: floatUp linear forwards;
-            z-index: 1;
+            z-index: 10;
         }
 
         @keyframes floatUp {
@@ -67,11 +74,38 @@
                 opacity: 0;
             }
         }
+
+        /* ব্লাস্ট হার্টের জন্য ট্র্যাজেক্টরি */
+        @keyframes blastUpLeft { 
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(-30vw, -70vh) rotate(-180deg) scale(0); opacity: 0; }
+        }
+        @keyframes blastUpRight { 
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(30vw, -70vh) rotate(180deg) scale(0); opacity: 0; }
+        }
+        @keyframes blastLeft { 
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(-50vw, -10vh) rotate(-90deg) scale(0); opacity: 0; }
+        }
+        @keyframes blastRight { 
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(50vw, -10vh) rotate(90deg) scale(0); opacity: 0; }
+        }
+        @keyframes blastDownLeft { 
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(-30vw, 30vh) rotate(-270deg) scale(0); opacity: 0; }
+        }
+        @keyframes blastDownRight { 
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(30vw, 30vh) rotate(270deg) scale(0); opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
 
-    <h1>Sorry Gubbu 🥺❤️<br><span style="font-size: 1.5rem; color: #555;">Please forgive me!</span></h1>
+    <h1>Sorry Gubbu 🥺❤️</h1>
     
     <p class="love-text">i love you bou forever,and ever,and ever 💕</p>
 
@@ -80,29 +114,42 @@
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
-            
-            // হার্টগুলো স্ক্রিনের যেকোনো জায়গা থেকে উঠবে
             heart.style.left = Math.random() * 100 + 'vw';
-            
-            // হার্টের সাইজ ছোট-বড় হবে
             const size = Math.random() * 2 + 1;
             heart.style.fontSize = size + 'rem';
-            
-            // ওড়ার স্পিড
             heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            
             document.body.appendChild(heart);
-            
-            // ৫ সেকেন্ড পর হার্টগুলো ডিলিট হয়ে যাবে যাতে ব্রাউজার স্লো না হয়
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => { heart.remove(); }, 5000);
         }
 
-        // শুরুতে একসাথে অনেকগুলো হার্ট ব্লাস্ট হবে
-        for(let i = 0; i < 50; i++) {
-            setTimeout(createHeart, Math.random() * 1500);
+        function loveBlast() {
+            const blastCenter = document.querySelector('.love-text');
+            const blastRect = blastCenter.getBoundingClientRect();
+            const centerX = blastRect.left + blastRect.width / 2;
+            const centerY = blastRect.top + blastRect.height; // ব্লাস্ট লেখার নিচ থেকে হবে
+
+            const trajectories = ['blastUpLeft', 'blastUpRight', 'blastLeft', 'blastRight', 'blastDownLeft', 'blastDownRight'];
+
+            for (let i = 0; i < 60; i++) { // ৬০টি হার্ট একসাথে
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = (i % 3 === 0) ? '💖' : (i % 3 === 1) ? '💕' : '❤️'; // বিভিন্ন হার্ট
+                heart.style.left = centerX + 'px';
+                heart.style.top = centerY + 'px';
+                const size = Math.random() * 2 + 1.5;
+                heart.style.fontSize = size + 'rem';
+                
+                // র্যান্ডম ট্র্যাজেক্টরি নির্বাচন
+                const trajectory = trajectories[Math.floor(Math.random() * trajectories.length)];
+                heart.style.animation = `${trajectory} ${Math.random() * 2 + 1.5}s ease-out forwards`;
+                
+                document.body.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 4000);
+            }
         }
+
+        // শুরুতে ব্লাস্ট হবে (১.৫ সেকেন্ড পর)
+        setTimeout(loveBlast, 1500);
 
         // এরপর কন্টিনিউয়াসলি হার্ট উড়তে থাকবে
         setInterval(createHeart, 150);
